@@ -1,0 +1,20 @@
+name: Convert LaTeX to PDF
+
+on:
+  workflow_dispatch
+jobs:
+  makepdf:
+    name: Convert LaTeX to PDF
+    runs-on: ubuntu-latest
+    steps:
+    - name: Perform Checkout
+      uses: actions/checkout@v2
+    - name: Install ANT,  LaTeX Things
+      run: |
+        sudo apt-get update && sudo apt-get install texlive-xetex texlive-humanities texlive-lang-german latexmk openjdk-11-jre-headless ant -y --no-install-recommend
+    - name: Convert Files
+      run: |
+        ./makepdf.sh
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: made pdfs
