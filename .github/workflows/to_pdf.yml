@@ -15,6 +15,17 @@ jobs:
     - name: Convert Files
       run: |
         ./makepdf.sh
+    - name: Copy processed data to freud-digital/frd-archiv
+      uses: dmnemec/copy_file_to_another_repo_action@main
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+      with:
+        source_file: './pdf/.'
+        destination_repo: 'freud-digital/frd-archiv'
+        destination_folder: 'data/pdf'
+        user_email: 'peter.andorfer@oeaw.ac.at.com'
+        user_name: 'csae8092'
+        commit_message: 'copy XML/TEI files from frd-static'
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: made pdfs
