@@ -142,6 +142,9 @@
         \beginnumbering
         <xsl:for-each select=".//tei:body/tei:div"><xsl:apply-templates/></xsl:for-each>
         \endnumbering
+        
+        \section*{Herausgebereingriffe}
+        \doendnotes{C}
   
         \section*{Kritischer Apparat}
         \doendnotes{A}
@@ -168,9 +171,14 @@
         <xsl:apply-templates/>
         \pend
     </xsl:template>
+    
+    <xsl:template match="tei:choice">
+        <xsl:text>\edtext{</xsl:text><xsl:apply-templates select=".//tei:corr/text()"/><xsl:text>}{\lemma{\textbf{</xsl:text><xsl:apply-templates select=".//tei:corr"/><xsl:text>}}\Cendnote{</xsl:text><xsl:value-of select=".//tei:sic/text()"/><xsl:text>}}</xsl:text>
+        
+    </xsl:template>
     <xsl:template match="tei:app[not(ancestor::tei:note)]">
         <xsl:variable name="listWit" select="root()//tei:listWit" as="node()"/>
-        <xsl:text>\edtext{</xsl:text><xsl:apply-templates select="./tei:lem"/>}<xsl:text>{\lemma{\textbf{</xsl:text><xsl:apply-templates select="./tei:lem"/><xsl:text>}}\Aendnote{</xsl:text><xsl:for-each select=".//tei:rdg"><xsl:variable name="witIds">
+        <xsl:text>\edtext{</xsl:text><xsl:apply-templates select="./tei:lem"/><xsl:text>}{\lemma{\textbf{</xsl:text><xsl:apply-templates select="./tei:lem"/><xsl:text>}}\Aendnote{</xsl:text><xsl:for-each select=".//tei:rdg"><xsl:variable name="witIds">
             <xsl:value-of select="string-join(./@wit, ' ')"/>
         </xsl:variable>
             <xsl:variable name="witLabels">
@@ -197,7 +205,7 @@
                 </xsl:for-each>
             </xsl:variable><xsl:apply-templates select="."/><xsl:text> </xsl:text><xsl:for-each select="$witLabels"><xsl:value-of select="."/><xsl:text> </xsl:text></xsl:for-each></xsl:for-each>}}
     </xsl:template>
-    <xsl:template match="tei:note[@type='e']">\edtext{}{\Bendnote{<xsl:apply-templates/>}}
+    <xsl:template match="tei:note[@type='e']"><xsl:text>\edtext{}{\Bendnote{</xsl:text><xsl:apply-templates/><xsl:text>}}</xsl:text>
     </xsl:template>
     
     <xsl:template match="tei:note[@type='footnote']">
