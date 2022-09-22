@@ -140,6 +140,7 @@
         \begin{document}
 
         \beginnumbering
+        <xsl:call-template name="kommentar"></xsl:call-template>
         <xsl:for-each select=".//tei:body/tei:div"><xsl:apply-templates/></xsl:for-each>
         \endnumbering
         
@@ -159,14 +160,29 @@
 
         \end{document}
     </xsl:template>
-    
-    <xsl:template match="tei:p[(@rend='h1')]">
-        <xsl:text>\pstart</xsl:text>
-        <xsl:text>\eledsection*{</xsl:text><xsl:apply-templates/><xsl:text>}</xsl:text>
-        <xsl:text>\pend</xsl:text>
+
+    <xsl:template name="kommentar">
+        <xsl:for-each select=".//tei:notesStmt/tei:note[@type='e']">
+            \pstart[\section{Vorwort}]
+            <xsl:value-of select="./tei:title"/>
+            \pend
+            \pstart
+            <xsl:for-each select="./tei:p">
+                <xsl:apply-templates/>
+            </xsl:for-each>
+            \pend
+        </xsl:for-each>
+        \beforeeledchapter
     </xsl:template>
     
-    <xsl:template match="tei:p[not(@rend='h1')]">
+    <xsl:template match="tei:p[(@rendition='h1')]">
+        \pstart[\section{<xsl:value-of select="//tei:biblStruct[@xml:id='guiding_manifestation']//tei:title[@type='manifestation']"/>}]
+        <xsl:apply-templates/>
+        \pend
+        \beforeeledchapter
+    </xsl:template>
+    
+    <xsl:template match="tei:p[not(@rendition)]">
         \pstart
         <xsl:apply-templates/>
         \pend
@@ -205,7 +221,8 @@
                 </xsl:for-each>
             </xsl:variable><xsl:apply-templates select="."/><xsl:text> </xsl:text><xsl:for-each select="$witLabels"><xsl:value-of select="."/><xsl:text> </xsl:text></xsl:for-each></xsl:for-each>}}
     </xsl:template>
-    <xsl:template match="tei:note[@type='e']"><xsl:text>\edtext{}{\Bendnote{</xsl:text><xsl:apply-templates/><xsl:text>}}</xsl:text>
+    <xsl:template match="tei:note[@type='e']">
+        <xsl:text>\edtext{}{\Bendnote{</xsl:text><xsl:apply-templates/><xsl:text>}}</xsl:text>
     </xsl:template>
     
     <xsl:template match="tei:note[@type='footnote']">
@@ -214,6 +231,18 @@
     
     <xsl:template match="tei:term">\textbf{<xsl:value-of select="."/>}</xsl:template>
     <xsl:template match="tei:fw"/>
+    <!-- <xsl:template match="tei:lb[@break='no']"/>
+    <xsl:template match="tei:pb"/>
+    <xsl:template match="tei:lb[@break='paragraph']">
+        <xsl:choose>
+            <xsl:when test="following-sibling::tei:pb">
+                <xsl:text> </xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+                
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template> -->
     
     <xsl:template match="tei:rs[starts-with(@ref, '#frd_kw')]"><xsl:value-of select="."/>\edindex[kw]{<xsl:value-of select="replace(@ref, '#frd_kw_', 'Schlagwort Nr. ')"/>}</xsl:template>
     
@@ -222,5 +251,16 @@
     <!--<xsl:template match="tei:pb">
         <xsl:text>{\pb}</xsl:text>
     </xsl:template>-->
+
+    <xsl:template match="tei:hi[@rendition='#smallcaps']">
+        <xsl:choose>
+            <xsl:when test="child::tei:app">
+                <xsl:text>\so{</xsl:text><xsl:value-of select="./tei:app/tei:lem/text()"/><xsl:text>}</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:text>\so{</xsl:text><xsl:value-of select="."/><xsl:text>}</xsl:text>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
     
 </xsl:stylesheet>
