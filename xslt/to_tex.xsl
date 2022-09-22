@@ -138,7 +138,8 @@
         \makeindex[name=person,title=Personenregister,columns=2]
         
         \begin{document}
-
+        \title{<xsl:value-of select="//tei:biblStruct[@xml:id='guiding_manifestation']//tei:title[@type='manifestation']"/>}
+        
         \beginnumbering
         <xsl:call-template name="kommentar"></xsl:call-template>
         <xsl:for-each select=".//tei:body/tei:div"><xsl:apply-templates/></xsl:for-each>
@@ -163,19 +164,15 @@
 
     <xsl:template name="kommentar">
         <xsl:for-each select=".//tei:notesStmt/tei:note[@type='e']">
-            \pstart[\section{Vorwort}]
-            <xsl:value-of select="./tei:title"/>
-            \pend
-            \pstart
+            \section{<xsl:value-of select="./tei:title"/>}
             <xsl:for-each select="./tei:p">
                 <xsl:apply-templates/>
             </xsl:for-each>
-            \pend
         </xsl:for-each>
         \beforeeledchapter
     </xsl:template>
     
-    <xsl:template match="tei:p[(@rendition='h1')]">
+    <xsl:template match="tei:p[@rendition='h1']">
         \pstart[\section{<xsl:value-of select="//tei:biblStruct[@xml:id='guiding_manifestation']//tei:title[@type='manifestation']"/>}]
         <xsl:apply-templates/>
         \pend
