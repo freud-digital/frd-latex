@@ -1,0 +1,399 @@
+
+        \documentclass[twoside=true,titlepage=false,open=any, parskip=never, fontsize=10pt, headings=small, chapterprefix=false, appendixprefix=false]{scrbook}
+        \addtolength{\oddsidemargin}{\evensidemargin}
+        \setlength{\oddsidemargin}{.5\oddsidemargin}
+        \setlength{\evensidemargin}{\oddsidemargin}
+        \usepackage[paperheight=230mm, paperwidth=138mm, textwidth=100mm, textheight=185mm]{geometry}
+        
+        \usepackage{scrlayer-scrpage}
+        \usepackage{hyphenat}
+        \usepackage{fontspec}
+        \usepackage{moresize}
+        %\usepackage{ipa}
+        \usepackage[english, ngerman]{babel}
+        \usepackage[babel]{microtype}
+        \usepackage{soul}
+        \usepackage{scrhack}
+        \usepackage{xpatch}
+        \usepackage[nonewpage]{indextools}
+        \usepackage{lettrine}
+        \usepackage[series={A,B,C}]{reledmac}
+        
+        \setmainfont[Path=./fonts/,
+        Extension=.ttf,
+        UprightFont=*-Roman,
+        BoldFont=*-Bold,
+        ItalicFont=*-Italic,
+        BoldItalicFont=*-BoldItalic]{Brill}
+        
+        \KOMAoptions{toc=chapterentrydotfill, toc=flat}
+        \addtokomafont{chapterentrypagenumber}{\mdseries}
+        \setkomafont{chapterentry}{\normalfont\mdseries}
+        \setkomafont{partentry}{\normalfont\mdseries}
+        \RedeclareSectionCommand[tocbeforeskip=0pt]{chapter}         
+        
+        \setlength{\skip\footins}{4mm plus 2mm} % Abstand Fussnote Text
+        \interfootnotelinepenalty=10000 % Kein Seitenwechsel in Fuss
+        
+        %% Sperrung (Package Soul)
+        %% Hier ist die Sperrung definiert. Sperrung erreicht man mit \so{gesperrtes Wort}
+        \sodef\so{}{.14em}{.4em plus.1em minus .1em}{.4em plus.1em minus .1em}
+        
+        
+        
+        % Fußnoten linksbündig
+        \deffootnote{1.5em}{1em}{% 
+        \makebox[1.5em][l]{\thefootnotemark}%
+        }
+        
+        
+        % Fussnotenlineal (wobei für reledmac wohl was anderes gilt)
+        \let\normalfootnoterule\footnoterule
+        \setfootnoterule{0pt}
+        \let\normalfootnoterule\footnoterule
+        
+        
+        \setlength{\skip\footins}{8mm plus 2mm} % Abstand Fussnote Text
+        \interfootnotelinepenalty=10000 % Kein Seitenwechsel in Fuss
+        
+        %% Kapitelüberschriften
+        \renewcommand*{\raggedchapter}{\centering} 
+        \renewcommand*{\raggedsection}{%
+        \CenteringLeftskip=1cm plus 1em\relax 
+        \CenteringRightskip=1cm plus 1em\relax 
+        \Centering\footnotesize\thesection{}.\ }
+        \setkomafont{section}{\footnotesize}
+        \setkomafont{chapter}{\normalfont\Large}
+        \renewcommand{\chapterpagestyle}{empty}%The first page in each chapter won't have any heading or footer, especially no page number
+        
+        % section ohne führende Kapitelnummer
+        \renewcommand*\thesection{\arabic{section}}
+        
+        % Bildunterschrift ohne Nummer
+        \renewcommand*{\figureformat}{}
+        \renewcommand*{\captionformat}{}
+        
+        %% Zeilennummern
+        \firstlinenum{0} \linenumincrement{5}
+        \lineation{section} %Jeder Abschnitt wird durchnummeriert
+        \renewcommand{\numlabfont}{\ssmall} %Schriftgröße Zeilennummern
+        
+        
+        \newcommand{\Theight}{\dimexpr\fontcharht\font`W}
+        \newcommand{\pbposition}{\depth}
+        \newcommand{\pb}{\nobreak\hspace{0pt}\raisebox{-0.1em}{\raisebox{\pbposition}{\textnormal{HANSI4EVER}}}\nobreak\hspace{0pt}}
+        
+        \renewcaptionname{ngerman}{\contentsname}{Inhalt}           %Table of contents
+        
+        % FUSSNOTE
+        %% Im Apparat f. und ff.
+        \Xtwolines{f.}
+        \Xtwolinesbutnotmore
+        
+        %% Zeilennummerierung Abstand zum Lemma
+        \Xboxlinenum{5mm}
+        
+        %% Bei zwei Apparateinträgen in einer Zeile wird nur beim ersten Mal die Zeile gezählt
+        \Xnumberonlyfirstinline
+        \Xnumberonlyfirstintwolines
+        \Xinplaceofnumber{1em}
+        \Xhangindent{1em}
+        
+        % ENDNOTEN
+        \Xendbeforepagenumber{} 
+        \Xendparagraph[A]
+        \Xendsep{}
+        \Xendafterpagenumber[A]{, }
+        \Xendnotenumfont[A]{\tiny}
+        \Xendlineprefixsingle[A]{\tiny}
+        \Xendlineprefixmore[A]{\tiny}
+        \Xendhangindent[A]{4em}
+        
+        \Xendboxlinenum[A]{0em}
+        \Xendlemmaseparator{$\rbracket$}
+        \Xendnotefontsize[A]{\footnotesize}
+        \Xendhangindent[A]{0em}
+        \Xendlemmafont[A]{\normalfont}
+        \Xendlemmafont[B]{\bfseries}
+        \Xendnotefontsize[B]{\footnotesize}
+        \Xendnotenumfont{\footnotesize}
+        \Xendlineprefixsingle[C]{\tiny}
+        \Xendlineprefixmore[C]{\tiny}
+        \Xendlemmadisablefontselection
+        \Xendlemmafont{\itshape}
+        \Xendlinerangeseparator{\tiny{--}}
+        \Xendhangindent{4em}
+        \Xendboxlinenum{3.6em}
+        \Xendafternumber{0.4em}
+        \Xendboxlinenumalign{R}
+        
+        \makeindex[name=kw,title=Schlagworteregister,columns=2]
+        \makeindex[name=person,title=Personenregister,columns=2]
+        
+        \begin{document}
+
+        \beginnumbering
+        
+            
+            
+            
+        \pstart
+        
+               
+                  \edtext{DIE FREUD’SCHE}{\lemma{\textbf{DIE FREUD’SCHE}}\Aendnote{Freudsche S2S3S4S5C }} PSYCHOANALYTISCHE METHODE
+               
+            
+        \pend
+    
+            
+        \pstart
+        „Die eigentümliche Methode der Psychotherapie, die Freud ausübt und als \edtext{Psychoanalyse\edindex[kw]{Schlagwort Nr. 2113}}{\lemma{\textbf{Psychoanalyse\edindex[kw]{Schlagwort Nr. 2113}}}\Aendnote{Psycho-Analyse E }} bezeichnet, ist aus dem sogenanntenkathartischen Verfahren\edindex[kw]{Schlagwort Nr. 3415} hervorgegangen,
+               über welches er seinerzeit in den „Studien über Hysterie“ 1895 in
+               Gemeinschaft mit
+               J. Breuer\edindex[person]{Person Nr. 40}\edtext{}{\Bendnote{\textbf{Breuer} Josef Breuer
+                  (1842-1925), österr. Internist und Physiologe, veröffentl. gem. mit Freud u.a.
+                     Studien über Hysterie .}} berichtet
+               hat. Diekathartische
+                  Therapie\edindex[kw]{Schlagwort Nr. 3415} war eine Erfindung \edtext{Breuers}{\lemma{\textbf{Breuers}}\Aendnote{Breuer’s ES1 }}, der mit ihrer Hilfe zuerst etwa ein Dezennium vorher
+               eine hysterische Kranke hergestellt und dabei Einsicht in die Pathogenese\edindex[kw]{Schlagwort Nr. 1983}\edtext{}{\Bendnote{\textbf{Pathogenese} Krankheitsentwicklung}} ihrer Symptome gewonnen
+               hatte. Infolge einer persönlichen Anregung \edtext{Breuers}{\lemma{\textbf{Breuers}}\Aendnote{Breuer’s ES1 }} nahm dann Freud das Verfahren
+               wieder auf und erprobte es an einer \edtext{größeren}{\lemma{\textbf{größeren}}\Aendnote{grösseren E }} Anzahl von Kranken.
+        \pend
+    
+            
+        \pstart
+        Das kathartische Verfahren setzte voraus, \edtext{daß}{\lemma{\textbf{daß}}\Aendnote{dass E }} der Patient hypnotisierbar\edtext{sei,}{\lemma{\textbf{sei,}}\Aendnote{sei und S2ES1S3S4 }} und beruhte auf der Erweiterung des \edtext{Bewußtseins}{\lemma{\textbf{Bewußtseins}}\Aendnote{Bewusstseins E }}, die in der Hypnose\edindex[kw]{Schlagwort Nr. 1219} eintritt. \edtext{Es}{\lemma{\textbf{Es}}\Aendnote{Er E }} setzte sich die Beseitigung der Krankheitssymptome zum Ziele und
+               erreichte dies, indem \edtext{es}{\lemma{\textbf{es}}\Aendnote{er E }} den Patienten sich in den psychischen Zustand zurückversetzen \edtext{ließ}{\lemma{\textbf{ließ}}\Aendnote{liess E }}, in welchem das Symptom\edindex[kw]{Schlagwort Nr. 2643} zum \edtext{erstenmal}{\lemma{\textbf{erstenmal}}\Aendnote{erstenmale E ersten Male S1S2S3S4 }} aufgetreten war. Es tauchten dann bei dem hypnotisierten Kranken
+               Erinnerungen, Gedanken und Impulse auf, die in seinem \edtext{Bewußtsein}{\lemma{\textbf{Bewußtsein}}\Aendnote{Bewusstsein E }} bisher ausgefallen waren, und wenn er diese seine seelischen Vorgängeunter intensiven \edtext{Affektäußerungen}{\lemma{\textbf{Affektäußerungen}}\Aendnote{Affektäusserungen E }} dem Arzte mitgeteilt hatte, war das Symptom überwunden, die Wiederkehr
+               desselben aufgehoben. Diese \edtext{regelmäßig}{\lemma{\textbf{regelmäßig}}\Aendnote{regelmässig E }} zu wiederholende Erfahrung erläuterten die beiden Autoren in ihrer
+               gemeinsamen Arbeit dahin, \edtext{daß}{\lemma{\textbf{daß}}\Aendnote{dass E }} das Symptom an Stelle von unterdrückten und nicht zum \edtext{Bewußtsein}{\lemma{\textbf{Bewußtsein}}\Aendnote{Bewusstsein E }} gelangten psychischen Vorgängen stehe, also eine Umwandlung
+               („Konversion“) der letzteren darstelle. Die therapeutische Wirksamkeit ihres Verfahrens erklärten sie sich aus der Abfuhr des bis dahin gleichsam „eingeklemmten“ Affektes, der an den
+                  unterdrückten seelischen Aktionen gehaftet hatte („Abreagieren“).
+               Das einfache Schema des therapeutischen\edtext{Eingriffes}{\lemma{\textbf{Eingriffes}}\Aendnote{Eingriffs ES1 }} komplizierte sich aber nahezu \edtext{allemal}{\lemma{\textbf{allemal}}\Aendnote{alle Male ES1S2S3S4 }}, indem sich zeigte, \edtext{daß}{\lemma{\textbf{daß}}\Aendnote{dass E }} nicht ein einzelner („traumatischer“) Eindruck, sondern meist eine schwer
+               zu übersehende Reihe von solchen an der Entstehung des Symptoms
+               beteiligt sei.
+        \pend
+    
+
+
+            
+        \pstart
+        Der Hauptcharakter der kathartischen Methode, der sie \edtext{in}{\lemma{\textbf{in}}\Aendnote{im S3S4 }} Gegensatz zu allen anderen Verfahren der Psychotherapie setzt, liegt
+               also darin, \edtext{daß}{\lemma{\textbf{daß}}\Aendnote{dass E }} bei ihr die therapeutische Wirksamkeit nicht einem suggestiven Verbot des
+               Arztes übertragen wird. Sie erwartet vielmehr, \edtext{daß}{\lemma{\textbf{daß}}\Aendnote{dass E }} die Symptome von selbst verschwinden werden, wenn es dem Eingriff, der
+               sich auf gewisse Voraussetzungen über den psychischen \edtext{Mechanismus}{\lemma{\textbf{Mechanismus}}\Aendnote{Mechanismns S3 }} beruft, gelungen ist, seelische Vorgänge zu einem \edtext{andern}{\lemma{\textbf{andern}}\Aendnote{anderen ES1 }} als dem bisherigen \edtext{Verlaufe}{\lemma{\textbf{Verlaufe}}\Aendnote{Verlauf ES1 }} zu bringen, der in die Symptombildung eingemündet hat.
+        \pend
+    
+            
+        \pstart
+        Die Abänderungen, welche Freud an dem kathartischen
+                  Verfahren \edtext{Breuers}{\lemma{\textbf{Breuers}}\Aendnote{Breuer’s ES1 }} vornahm, waren zunächst Änderungen der Technik; diese brachten
+               aber neue Ergebnisse und haben in weiterer Folge zu einer andersartigen, wiewohl
+               der früheren nicht \edtext{widersprechenden}{\lemma{\textbf{widersprechenden}}\Aendnote{widersprechenden, S1S2S3S4 }} Auffassung der therapeutischen Arbeit genötigt.
+        \pend
+    
+            
+        \pstart
+        Hatte die kathartische Methode bereits auf die Suggestion\edindex[kw]{Schlagwort Nr. 2631} verzichtet, so unternahm Freud den weiteren Schritt, auch die Hypnose aufzugeben. Er behandelt
+                  gegenwärtig\edtext{}{\Bendnote{\textbf{gegenwärtig} Zur Zeit der
+                  Entstehung des Textes: 1904}} seine Kranken,indem er sie ohne andersartige Beeinflussung eine bequeme Rückenlage auf
+               einem Ruhebett einnehmen \edtext{läßt}{\lemma{\textbf{läßt}}\Aendnote{lässt E }}, während er
+               \edtext{selbst,}{\lemma{\textbf{selbst,}}\Aendnote{selbst S2ES1S3S4 }} ihrem Anblick \edtext{entzogen,}{\lemma{\textbf{entzogen,}}\Aendnote{entzogen S2ES1S3S4 }} auf einem Stuhle hinter ihnen sitzt. Auch den \edtext{Verschluß}{\lemma{\textbf{Verschluß}}\Aendnote{Verschluss E }} der Augen fordert er von ihnen nicht und vermeidet jede Berührung sowie
+               jede andere Prozedur, die an Hypnose mahnen könnte. Eine solche Sitzung verläuft
+               also wie ein Gespräch zwischen zwei gleich wachen Personen, von denen die
+               eine sich jede Muskelanstrengung und jeden ablenkenden Sinneseindruck
+               erspart, die sie in der Konzentration ihrer Aufmerksamkeit auf ihre eigene
+               seelische Tätigkeit stören könnten.
+        \pend
+    
+
+
+            
+        \pstart
+        Da das \edtext{Hypnotisiertwerden}{\lemma{\textbf{Hypnotisiertwerden}}\Aendnote{Hypnotisirtwerden E }}, trotz aller Geschicklichkeit des
+               \edtext{Arztes,}{\lemma{\textbf{Arztes,}}\Aendnote{Arztes E }} bekanntlich in der Willkür des Patienten \edtext{liegt,}{\lemma{\textbf{liegt,}}\Aendnote{liegt E }} und eine
+               \edtext{große}{\lemma{\textbf{große}}\Aendnote{grosse E }} Anzahl neurotischer Personen durch kein Verfahren in Hypnose zu versetzen
+               ist, so war durch den Verzicht auf die Hypnose die Anwendbarkeit des Verfahrens
+               auf eine uneingeschränkte Anzahl von Kranken gesichert. \edtext{Anderseits}{\lemma{\textbf{Anderseits}}\Aendnote{Andererseits ES1 }} fiel die Erweiterung des \edtext{Bewußtseins}{\lemma{\textbf{Bewußtseins}}\Aendnote{Bewusstseins E }} weg, welche dem Arzt gerade jenes psychische Material an Erinnerungen und
+               Vorstellungen geliefert hatte, mit dessen Hilfe sich die Umsetzung der Symptome
+               und die Befreiung der Affekte vollziehen \edtext{ließ}{\lemma{\textbf{ließ}}\Aendnote{liess E }}. Wenn für diesen Ausfall kein Ersatz zu schaffen war, konnte
+               auch von einer therapeutischen Einwirkung keine Rede sein.
+        \pend
+    
+            
+        \pstart
+        Einen solchen völlig ausreichenden Ersatz fand nun Freud in den Einfällen der Kranken, \edtext{das heißt}{\lemma{\textbf{das heißt}}\Aendnote{d. h. ES1S2S3S4 }} in den ungewollten, meist als störend empfundenen und darum unter
+               gewöhnlichen Verhältnissen beseitigten Gedanken, die den Zusammenhang einer
+               beabsichtigten Darstellung zu durchkreuzen pflegen. Um sich dieser Einfälle zu
+               bemächtigen, fordert er die Kranken auf, sich in ihren Mitteilungen gehen zu\edtext{lassen,}{\lemma{\textbf{lassen,}}\Aendnote{lassen E }} „wie man es etwa in einem \edtext{Gespräche}{\lemma{\textbf{Gespräche}}\Aendnote{Gespräch ES1 }}
+               tut, bei welchem man aus dem
+               Hundertsten in das Tausendste \edtext{gerät.“}{\lemma{\textbf{gerät.“}}\Aendnote{gerät“. ES1S2S3S4 }} Er schärft ihnen, ehe er sie zur detaillierten Erzählung ihrer
+               Krankengeschichte auffordert, ein, alles mit zu sagen, was ihnen dabei durch den
+               Kopf geht, auch wenn siemeinen, es sei unwichtig, oder es gehöre nicht dazu, oder es sei
+               unsinnig. Mit besonderem \edtext{Nachdrucke}{\lemma{\textbf{Nachdrucke}}\Aendnote{Nachdruck ES1 }} aber wird von ihnen verlangt, \edtext{daß}{\lemma{\textbf{daß}}\Aendnote{dass E }} sie keinen Gedanken oder Einfall darum von der Mitteilung \edtext{ausschließen}{\lemma{\textbf{ausschließen}}\Aendnote{ausschliessen E }}, weil ihnen diese Mitteilung beschämend oder peinlich ist. Bei den
+               Bemühungen, dieses Material an sonst vernachlässigten Einfällen zu sammeln,
+               machte nun Freud die Beobachtungen, die für
+               seine ganze Auffassung bestimmend geworden sind. Schon bei der Erzählung\edindex[kw]{Schlagwort Nr. 766} der Krankengeschichte stellen
+               sich bei den Kranken Lücken der Erinnerung heraus, sei es, \edtext{daß}{\lemma{\textbf{daß}}\Aendnote{dass E }} tatsächliche Vorgänge vergessen worden, sei es, \edtext{daß}{\lemma{\textbf{daß}}\Aendnote{dass E }} zeitliche Beziehungen verwirrt oder Kausalzusammenhänge zerrissen worden sind, so \edtext{daß}{\lemma{\textbf{daß}}\Aendnote{dass E }} sich unbegreifliche Effekte ergeben. Ohne Amnesie irgend einer Art gibt
+               es keine neurotische Krankengeschichte. Drängt man den Erzählenden,
+               diese Lücken seines Gedächtnisses durch angestrengte Arbeit der Aufmerksamkeit
+                  auszufüllen, so merkt man, \edtext{daß}{\lemma{\textbf{daß}}\Aendnote{dass E }} die \edtext{hiezu}{\lemma{\textbf{hiezu}}\Aendnote{hierzu ES1S2S3S4 }} sich einstellenden Einfälle von ihm mit allen Mitteln der
+               Kritik zurückgedrängt werden, bis er endlich das direkte Unbehagen verspürt,
+               wenn sich die Erinnerung wirklich eingestellt hat. Aus dieser Erfahrung
+               \edtext{schließt}{\lemma{\textbf{schließt}}\Aendnote{schliesst E }}
+               Freud, \edtext{daß}{\lemma{\textbf{daß}}\Aendnote{dass E }} die Amnesien das Ergebnis eines \edtext{Vorganges}{\lemma{\textbf{Vorganges}}\Aendnote{Vorgangs ES1 }} sind, den er Verdrängung\edindex[kw]{Schlagwort Nr. 3028}
+               \edtext{heißt,}{\lemma{\textbf{heißt,}}\Aendnote{heisst E }} und als dessen Motiv er Unlustgefühle erkennt. Die psychischen Kräfte,
+               welche diese Verdrängung herbeigeführt haben, meint er in dem Widerstand\edindex[kw]{Schlagwort Nr. 3235}, der sich gegen die Wiederherstellung erhebt, zu
+                  verspüren.
+        \pend
+    
+
+
+            
+        \pstart
+        Das Moment des Widerstandes ist eines der Fundamente seiner Theorie geworden.
+               Die sonst unter allerlei Vorwänden (wie sie die obige \edtext{Formel}{\lemma{\textbf{Formel}}\Aendnote{Anzahl E }} aufzählt) beseitigten Einfälle betrachtet er aber als Abkömmlinge der
+               verdrängten psychischen Gebilde (Gedanken und Regungen\edtext{),}{\lemma{\textbf{),}}\Aendnote{) E }} als Entstellungen derselben infolge des gegen ihre Reproduktion
+               bestehenden Widerstandes.
+        \pend
+    
+            
+        \pstart
+        Je größer \edtext{größer}{\lemma{\textbf{größer}}\Aendnote{grösser E }} der Widerstand, desto ausgiebiger diese Entstellung\edindex[kw]{Schlagwort Nr. 658}. In dieser Beziehung der unbeabsichtigten
+               Einfälle zum verdrängten psychischen Material ruht nun ihr Wert für
+               die therapeutische Technik. Wenn man ein Verfahren besitzt, welches ermöglicht,
+               von den Einfällen aus zu dem Verdrängten, von den Entstellungen zum Entstellten
+               zu gelangen, so kann man auch ohne Hypnose das früher \edtext{Unbewußte\edindex[kw]{Schlagwort Nr. 2913}}{\lemma{\textbf{Unbewußte\edindex[kw]{Schlagwort Nr. 2913}}}\Aendnote{unbewusste E }} im Seelenleben dem
+               \edtext{Bewußtsein}{\lemma{\textbf{Bewußtsein}}\Aendnote{Bewusstsein E }} zugänglich machen.
+        \pend
+    
+
+
+            
+        \pstart
+        Freud hat darauf eine Deutungskunst\edindex[kw]{Schlagwort Nr. 3417}
+                ausgebildet, welcher
+               diese Leistung zufällt, die gleichsam aus den Erzen der unbeabsichtigten Einfälle den Metallgehalt an verdrängten Gedanken darstellen soll.
+               Objekt dieser Deutungsarbeit sind nicht allein die Einfälle \edtext{des}{\lemma{\textbf{des}}\Aendnote{der S1S2S3S4 }} Kranken, sondern auch seine Träume\edindex[kw]{Schlagwort Nr. 2750}, die den direktesten Zugang zur Kenntnis des \edtext{Unbewußten}{\lemma{\textbf{Unbewußten}}\Aendnote{Unbewussten E }}
+               eröffnen, seine
+               unbeabsichtigten, wie planlosen Handlungen (Symptomhandlungen) und die Irrungen
+               seiner Leistungen im Alltagsleben \edtext{(Versprechen,}{\lemma{\textbf{(Versprechen,}}\Aendnote{Versprechen, E }}
+               Vergreifen u. \edtext{dgl.}{\lemma{\textbf{dgl.}}\Aendnote{dergl. E }}). Die Details dieser Deutungs- oder Übersetzungstechnik sind
+               von Freud noch nicht veröffentlicht
+                     worden\edtext{}{\Bendnote{\textbf{noch nicht veröffentlicht worden}Zur Psychopathologie des Alltagslebens
+                  erscheint 1904.}}. Es sind nach seinen Andeutungen eine Reihe von
+               empirisch gewonnenen Regeln, wie aus den Einfällen das \edtext{unbewußte}{\lemma{\textbf{unbewußte}}\Aendnote{unbewusste E }} Material zu konstruieren ist, Anweisungen, wie man es zu verstehen
+               habe, wenn die Einfälle des Patienten versagen, und Erfahrungen über die \edtext{wichtigsten}{\lemma{\textbf{wichtigsten}}\Aendnote{richtigsten E }} typischen Widerstände, die sich im Laufe einer solchen Behandlung \edtext{einstellen.}{\lemma{\textbf{einstellen.}}\Aendnote{einstellen E }} Ein umfangreiches Buch über\edtext{ „Traumdeutung “,}{\lemma{\textbf{ „Traumdeutung “,}}\Aendnote{die „Traumdeutung“ E }} 1900 von Freud publiziert, ist als
+               Vorläufer einer solchen Einführung in die Technik anzusehen.
+        \pend
+    
+            
+        \pstart
+        Man könnte aus diesen Andeutungen über die Technik der psychoanalytischen
+               Methode \edtext{schließen}{\lemma{\textbf{schließen}}\Aendnote{schliessen E }}, \edtext{daß}{\lemma{\textbf{daß}}\Aendnote{dass E }} deren Erfinder sich überflüssige Mühe verursacht und Unrecht getan hat,
+               das wenig komplizierte hypnotische Verfahren zu verlassen. Aber einerseits
+               ist die Technik \edtext{der}{\lemma{\textbf{der}}\Aendnote{der, E }} Psychoanalyse viel leichter auszuüben, wenn man sie einmal erlernt hat,
+               als es bei einer Beschreibung den Anschein hat, \edtext{anderseits}{\lemma{\textbf{anderseits}}\Aendnote{andererseits E }} führt kein anderer Weg zum \edtext{Ziele,}{\lemma{\textbf{Ziele,}}\Aendnote{Ziele E }} und darum ist der mühselige Weg noch der kürzeste. Der Hypnose ist
+               vorzuwerfen, \edtext{daß}{\lemma{\textbf{daß}}\Aendnote{dass E }} sie den Widerstand verdeckt und dadurch dem Arzt den Einblick in das
+               Spiel der psychischen Kräfte verwehrt hat. Sie räumt aber mit dem Widerstande nicht auf, sondern weicht
+               ihm nur aus und ergibt \edtext{darum}{\lemma{\textbf{darum}}\Aendnote{dagegen ES1S2S3S4 }} nur unvollständige Auskünfte und nur vorübergehende
+                  Erfolge.
+        \pend
+    
+
+
+            
+        \pstart
+        Die Aufgabe, welche die psychoanalytische Methode zu lösen bestrebt ist, \edtext{läßt}{\lemma{\textbf{läßt}}\Aendnote{lässt E }} sich in verschiedenen Formeln ausdrücken, die aber ihrem Wesen nach
+               äquivalent sind. Man kann sagen: Aufgabe der Kur sei, die Amnesien
+               aufzuheben. Wenn alle Erinnerungslücken ausgefüllt, alle rätselhaften Effekte
+               des psychischen Lebens aufgeklärt sind, ist der Fortbestand, ja
+               eine Neubildung des Leidens unmöglich gemacht. Man kann die Bedingung
+               anders fassen: es seien alle Verdrängungen rückgängig zu machen; der psychische
+               Zustand ist dann derselbe, in dem alle Amnesien ausgefüllt sind. Weittragender
+               ist eine andere Fassung: es handle sich \edtext{darum,}{\lemma{\textbf{darum,}}\Aendnote{darum E }} das \edtext{Unbewußte}{\lemma{\textbf{Unbewußte}}\Aendnote{Unbewusste E }} dem \edtext{Bewußtsein}{\lemma{\textbf{Bewußtsein}}\Aendnote{Bewusstsein E }} zugänglich zu machen, was durch Überwindung der Widerstände
+               geschieht. Man darf aber dabei nicht vergessen, \edtext{daß}{\lemma{\textbf{daß}}\Aendnote{dass E }} ein solcher
+               \edtext{Idealzustand}{\lemma{\textbf{Idealzustand}}\Aendnote{Wachzustand E }} auch beim normalen Menschen nicht \edtext{besteht,}{\lemma{\textbf{besteht,}}\Aendnote{besteht E }} und
+               \edtext{daß}{\lemma{\textbf{daß}}\Aendnote{dass E }} man nur selten in die Lage kommen kann, die Behandlung annähernd so weit
+               zu treiben. So wie Gesundheit und Krankheit nicht prinzipiell geschieden,
+               sondern nur durch eine praktisch bestimmbare Summationsgrenze gesondert sind, so
+               wird man sich auch nie etwas anderes zum Ziel der Behandlung setzen als die
+               praktische Genesung des Kranken, die Herstellung seiner Leistungs-  und \edtext{Genußfähigkeit}{\lemma{\textbf{Genußfähigkeit}}\Aendnote{Genussfähigkeit E }}. Bei unvollständiger Kur oder unvollkommenem \edtext{Erfolge}{\lemma{\textbf{Erfolge}}\Aendnote{Erfolg E }} derselben erreicht man vor allem eine bedeutende Hebung des psychischen
+               Allgemeinzustandes, während die Symptome, aber mit geminderter Bedeutung für den \edtext{Kranken,}{\lemma{\textbf{Kranken,}}\Aendnote{Kranken E }} fortbestehen können, ohne ihn zu einem Kranken zu stempeln.
+        \pend
+    
+            
+        \pstart
+        Das therapeutische Verfahren \edtext{bleibt,}{\lemma{\textbf{bleibt,}}\Aendnote{bleibt E }} von geringen Modifikationen
+               \edtext{abgesehen,}{\lemma{\textbf{abgesehen,}}\Aendnote{abgesehen E }} das nämliche für alle Symptombilder der vielgestaltigenHysterie\edindex[kw]{Schlagwort Nr. 1224} und ebenso für alle Ausbildungen der Zwangsneurose. Von einer unbeschränkten
+               Anwendbarkeit desselben ist aber keine Rede. Die Natur der \edtext{psychoanalytischen}{\lemma{\textbf{psychoanalytischen}}\Aendnote{psycho-analytischen E }} Methode schafft Indikationen und Gegenanzeigen sowohl von \edtext{seiten}{\lemma{\textbf{seiten}}\Aendnote{Seiten E }} der zu behandelnden \edtext{Personen}{\lemma{\textbf{Personen}}\Aendnote{Personen, ES1S2S3S4 }} als auch mit Rücksicht auf das Krankheitsbild. Am günstigsten für die
+               Psychoanalyse sind die chronischen Fälle von Psychoneurosen mit wenig
+               stürmischen oder gefahrdrohenden Symptomen, also zunächst alle Arten der
+               Zwangsneurose, Zwangsdenken und Zwangshandeln, und Fälle von Hysterie, in
+               denen Phobien und Abulien \edtext{}{\Bendnote{\textbf{Abulien}Abulie, griech. krankhafte
+                  Willensschwäche}} die Hauptrolle spielen, weiterhin aber auch alle
+               somatischen Ausprägungen der Hysterie, \edtext{insoferne}{\lemma{\textbf{insoferne}}\Aendnote{insofern E }}
+               \edtext{nicht,}{\lemma{\textbf{nicht,}}\Aendnote{nicht E }} wie bei der \edtext{Anorexie,}{\lemma{\textbf{Anorexie,}}\Aendnote{Anorexie E }} rasche Beseitigung der Symptome zur Hauptaufgabe des Arztes wird. Bei
+               akuten Fällen von Hysterie wird man den Eintritt eines ruhigeren Stadiums
+               abzuwarten haben; in allen Fällen, bei denen die nervöse Erschöpfung obenan
+               steht, wird man ein Verfahren vermeiden, welches selbst Anstrengung erfordert,
+               nur langsame Fortschritte \edtext{zeitigt}{\lemma{\textbf{zeitigt}}\Aendnote{zeitigt, E }} und auf die Fortdauer der Symptome eine Zeitlang keine Rücksicht nehmen
+                  kann.
+        \pend
+    
+
+
+            
+        \pstart
+        An die Person, die man mit Vorteil der Psychoanalyse unterziehen
+               soll, sind mehrfache Forderungen zu stellen. Sie \edtext{muß}{\lemma{\textbf{muß}}\Aendnote{muss E }} erstens eines psychischen Normalzustandes fähig sein; in Zeiten der Verworrenheit oder
+               melancholischer Depression ist auch bei einer Hysterie nichts auszurichten. Man
+               darf ferner ein gewisses
+               \edtext{Maß}{\lemma{\textbf{Maß}}\Aendnote{Maass E }} natürlicher Intelligenz und ethischer Entwicklung fordern; bei wertlosen
+               Personen \edtext{läßt}{\lemma{\textbf{läßt}}\Aendnote{lässt E }} den Arzt bald das Interesse im Stiche, welches ihn zur Vertiefung in das
+               Seelenlebens des Kranken befähigt. Ausgeprägte Charakterverbildungen, Züge
+               von wirklich degenerativer Konstitution \edtext{äußern}{\lemma{\textbf{äußern}}\Aendnote{äussern E }} sich bei der Kur als Quelle von kaum zu überwindenden Widerständen.
+               Insoweit setzt überhaupt die Konstitution eine Grenze für die Heilbarkeit
+               durch Psychotherapie. Auch eine Altersstufe in der Nähe des fünften
+               Dezenniums schafft ungünstige Bedingungen für die Psychoanalyse. Die
+               Masse des psychischen Materials ist dann nicht mehr zu bewältigen, die zur
+               Herstellung erforderliche Zeit wird zu \edtext{lang,}{\lemma{\textbf{lang,}}\Aendnote{lang E }} und die Fähigkeit, psychische Vorgänge rückgängig zu machen, beginnt zu
+                  erlahmen.
+        \pend
+    
+
+            
+            
+            
+        \pstart
+        Trotz aller dieser Einschränkungen ist die Anzahl der für die Psychoanalyse
+               geeigneten Personen eine\edtext{außerordentlich große}{\lemma{\textbf{außerordentlich große}}\Aendnote{ausserordentlich grosse E außerordentlich große, S1S2S3S4 }} und die Erweiterung unseres therapeutischen Könnens durch dieses
+               Verfahren nach den Behauptungen \edtext{Freuds}{\lemma{\textbf{Freuds}}\Aendnote{Freud’s E }} eine sehr beträchtliche. Freud
+               beansprucht lange Zeiträume, \edtext{ein halbes}{\lemma{\textbf{ein halbes}}\Aendnote{½ ES1S2S3S4 }} bis \edtext{drei}{\lemma{\textbf{drei}}\Aendnote{3 ES1S2S3S4 }} Jahre für eine wirksame Behandlung; er gibt aber die Auskunft, \edtext{daß}{\lemma{\textbf{daß}}\Aendnote{dass E }} er bisher infolge verschiedener leicht zu erratender Umstände meist nur
+               in die Lage gekommen ist, seine Behandlung an sehr schweren Fällen zu erproben,
+               Personen mit vieljähriger Krankheitsdauer und völliger Leistungsunfähigkeit, \edtext{die,}{\lemma{\textbf{die,}}\Aendnote{die E }} durch alle Behandlungen getäuscht, gleichsam eine letzte Zuflucht bei
+               seinem neuen und viel abgezweifelten Verfahren gesucht \edtext{haben.}{\lemma{\textbf{haben.}}\Aendnote{haben S4 }} In Fällen leichterer Erkrankung dürfte sich die Behandlungsdauer
+               sehr verkürzen und ein \edtext{außerordentlicher}{\lemma{\textbf{außerordentlicher}}\Aendnote{ausserordentlicher E außerodentlicher S4 }} Gewinn an Vorbeugung für die Zukunft erzielen \edtext{lassen.“}{\lemma{\textbf{lassen.“}}\Aendnote{lassen“. E }}
+               
+            
+        \pend
+    
+         
+        \endnumbering
+        
+        \section*{Herausgebereingriffe}
+        \doendnotes{C}
+  
+        \section*{Kritischer Apparat}
+        \doendnotes{A}
+        
+        \section*{Stellenkommentar}
+        \doendnotes{B}
+        
+        \printindex[person]
+        \printindex[kw]
+        
+
+
+        \end{document}
+    
