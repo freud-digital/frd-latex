@@ -241,9 +241,9 @@
         </xsl:choose>
     </xsl:template> -->
     
-    <xsl:template match="tei:rs[starts-with(@ref, '#frd_kw')]"><xsl:value-of select="."/>\edindex[kw]{<xsl:value-of select="replace(@ref, '#frd_kw_', 'Schlagwort Nr. ')"/>}</xsl:template>
+    <xsl:template match="tei:rs[starts-with(@ref, '#frd_kw')]">\edindex[kw]{<xsl:value-of select="replace(@ref, '#frd_kw_', 'Schlagwort Nr. ')"/><xsl:text> (</xsl:text><xsl:value-of select="."/>)}</xsl:template>
     
-    <xsl:template match="tei:rs[starts-with(@ref, '#frd_person')]"><xsl:value-of select="."/>\edindex[person]{<xsl:value-of select="replace(@ref, '#frd_person_', 'Person Nr. ')"/>}</xsl:template>
+    <xsl:template match="tei:rs[starts-with(@ref, '#frd_person')]">\edindex[person]{<xsl:value-of select="replace(@ref, '#frd_person_', 'Person Nr. ')"/><xsl:text> (</xsl:text><xsl:value-of select="."/>)}</xsl:template>
     
     <!--<xsl:template match="tei:pb">
         <xsl:text>{\pb}</xsl:text>
